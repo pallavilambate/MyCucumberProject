@@ -1,7 +1,10 @@
 package StepDefinitions;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -9,36 +12,27 @@ import io.cucumber.java.en.When;
 import utils.TestContext;
 
 public class LandingPageStepDefinitions {
-	public WebDriver driver;
-	TestContext testContext;
-	public LandingPageStepDefinitions(TestContext context) {
-		testContext = context;
-		driver = testContext.driver;
+	//public WebDriver driver;
+	TestContext context;
+	public LandingPageStepDefinitions(TestContext context){
+		this.context=context;
 	}
 	@Given(": user is on landing page")
 	public void user_is_on_landing_page() {
 	    // Write code here that turns the phrase above into concrete actions
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.get("https://rahulshettyacademy.com/seleniumPractise/#/");
+		context.driver = new ChromeDriver();
+		//driver.manage().window().maximize();
+		context.driver.get("https://rahulshettyacademy.com/seleniumPractise/#/");
 	    
 	}
 	@When("^: user searched with (.+) and extarcted actual name of product$")
-	public void user_searched_with_and_extarcted_actual_name_of_product(String string) {
+	public void user_searched_with_and_extarcted_actual_name_of_product(String string) throws InterruptedException {
 	    // Write code here that turns the phrase above into concrete actions
-		System.out.println(":user searched with "+string+" and extarcted actual name of product");
-	    
+		context.driver.findElement(By.xpath("//input[@type='search']")).sendKeys(string);
+		Thread.sleep(2000);
+		context.landingPageProductName=context.driver.findElement(By.cssSelector("h4.product-name")).getText().split("-")[0].trim();
+		System.out.println("Searched product on landing page:--"+context.landingPageProductName);
 	}
-	@Then("^: user searched for (.+) shortname in offers page$")
-	public void user_searched_for_shortname_in_offers_page(String string) {
-	    // Write code here that turns the phrase above into concrete actions
-	    System.out.println(":user searched for "+string+ " shortname in offers page");
-	}
-	@Then(": validate products name in offers page matches with landing page")
-	public void validate_products_name_in_offers_page_matches_with_landing_page() {
-	    // Write code here that turns the phrase above into concrete actions
-	    System.out.println(": validate products name in offers page matches with landing page");
-		driver.quit();
-	}
-
+	
+	
 }
