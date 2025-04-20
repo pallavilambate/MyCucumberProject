@@ -18,6 +18,8 @@ public class OffersPageStepDefinition {
 	
 	String offerPageProductName;	
 	TestContext context;
+	//single responsibility principle
+	//loosly coupled
 	public OffersPageStepDefinition(TestContext context){
 		this.context=context;
 	}
@@ -39,5 +41,6 @@ public void user_searched_for_shortname_in_offers_page(String string) throws Int
 	public void validate_product_name_in_offers_page()
 	{
 		Assert.assertEquals(offerPageProductName,context.landingPageProductName);
+		context.driver.quit();
 	}
 }

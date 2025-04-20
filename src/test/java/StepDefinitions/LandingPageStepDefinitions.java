@@ -6,14 +6,17 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 
+
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import utils.TestContext;
+import MyCucumberRepository.*; // Ensure this is the correct package for the LandingPage class
 
 public class LandingPageStepDefinitions {
 	//public WebDriver driver;
 	TestContext context;
+	String url="https://rahulshettyacademy.com/seleniumPractise/#/";
 	public LandingPageStepDefinitions(TestContext context){
 		this.context=context;
 	}
@@ -21,8 +24,8 @@ public class LandingPageStepDefinitions {
 	public void user_is_on_landing_page() {
 	    // Write code here that turns the phrase above into concrete actions
 		context.driver = new ChromeDriver();
-		//driver.manage().window().maximize();
-		context.driver.get("https://rahulshettyacademy.com/seleniumPractise/#/");
+		LandingPage Lauchbrow=new LandingPage(context.driver);
+		Lauchbrow.launchBrowserAndGetUrl(url);
 	    
 	}
 	@When("^: user searched with (.+) and extarcted actual name of product$")
